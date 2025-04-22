@@ -50,10 +50,12 @@ func (cui *ConsoleUserInterface) StartControlListener(pm *plug.PlugManager) erro
 	}
 }
 
-func (cui *ConsoleUserInterface) OutputSelectedPlug(p *plug.Plug) {
+func (cui *ConsoleUserInterface) OutputSelectedPlug(p *plug.Plug) error {
 	line1, line2 := formatPlugOutput(p)
 
 	fmt.Print("\033[H\033[2J")
 	fmt.Println(line1)
 	fmt.Println(line2)
+
+	return nil
 }

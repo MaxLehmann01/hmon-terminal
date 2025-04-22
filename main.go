@@ -22,6 +22,8 @@ func main() {
 
 	if flags.DevMode {
 		ui.SetUserInterface(&ui.ConsoleUserInterface{})
+	} else {
+		ui.SetUserInterface(&ui.DisplayUserInterface{})
 	}
 
 	server.Start(plugManager, config.SERVER_PORT)

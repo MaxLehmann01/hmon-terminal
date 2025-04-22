@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/maxlehmann01/hmon-terminal/pkg/config"
@@ -9,7 +10,7 @@ import (
 
 type UserInterface interface {
 	StartControlListener(pm *plug.PlugManager) error
-	OutputSelectedPlug(p *plug.Plug)
+	OutputSelectedPlug(p *plug.Plug) error
 }
 
 var UI UserInterface
@@ -18,17 +19,25 @@ func SetUserInterface(ui UserInterface) {
 	UI = ui
 }
 
-func StartControlListener(pm *plug.PlugManager) {
-	if UI != nil {
-		UI.StartControlListener(pm)
+func StartControlListener(pm *plug.PlugManager) error {
+	if UI == nil {
+		return errors.New("no user interface set")
 	}
+
+	UI.StartControlListener(pm)
+
+	return nil
 }
 
-func OutputSelectedPlug(pm *plug.PlugManager) {
-	if UI != nil {
-		selectedPlug := pm.GetSelected()
-		UI.OutputSelectedPlug(selectedPlug)
+func OutputSelectedPlug(pm *plug.PlugManager) error {
+	if UI == nil {
+		return errors.New("no user interface set")
 	}
+
+	selectedPlug := pm.GetSelected()
+	UI.OutputSelectedPlug(selectedPlug)
+
+	return nil
 }
 
 func formatPlugOutput(p *plug.Plug) (line1 string, line2 string) {

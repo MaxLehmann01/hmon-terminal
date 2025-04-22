@@ -6,8 +6,10 @@ import (
 )
 
 const (
-	OUTPUT_WIDTH = 16
-	SERVER_PORT  = 8080
+	OUTPUT_WIDTH      = 16
+	SERVER_PORT       = 8080
+	BUTTON_SELECT_PIN = 4
+	BUTTON_TOGGLE_PIN = 17
 )
 
 type Flags struct {
