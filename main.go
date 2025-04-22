@@ -16,10 +16,6 @@ func main() {
 
 	plugManager := plug.NewPlugManager(flags.BackendUrl)
 
-	plugManager.AddPlug(&plug.Plug{ID: 1, Name: "Plug 1", PowerUsage: 100})
-	plugManager.AddPlug(&plug.Plug{ID: 2, Name: "Plug 2", PowerUsage: 201.2})
-	plugManager.AddPlug(&plug.Plug{ID: 3, Name: "Plug 3", PowerUsage: 35.1})
-
 	if flags.DevMode {
 		ui.SetUserInterface(&ui.ConsoleUserInterface{})
 	} else {
