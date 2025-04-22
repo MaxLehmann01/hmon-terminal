@@ -3,10 +3,13 @@ package plug
 type PlugManager struct {
 	plugs             []*Plug
 	selectedPlugIndex int
+	backendUrl        string
 }
 
-func NewPlugManager() *PlugManager {
-	return &PlugManager{}
+func NewPlugManager(backendUrl string) *PlugManager {
+	return &PlugManager{
+		backendUrl: backendUrl,
+	}
 }
 
 func (pm *PlugManager) AddPlug(p *Plug) {

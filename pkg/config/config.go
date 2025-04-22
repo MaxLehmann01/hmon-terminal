@@ -6,14 +6,13 @@ import (
 )
 
 const (
-	OUTPUT_WIDTH      = 16
-	SERVER_PORT       = 8080
-	BUTTON_SELECT_PIN = 4
-	BUTTON_TOGGLE_PIN = 17
+	OUTPUT_WIDTH = 16
 )
 
 type Flags struct {
-	DevMode bool
+	DevMode    bool
+	Port       int
+	BackendUrl string
 }
 
 type I2CDisplayConfig struct {
@@ -30,10 +29,14 @@ type I2CDisplayConfig struct {
 
 func GetParsedFlags() *Flags {
 	devModeFlag := flag.Bool("dev", false, "Run in development mode (output in console instead of i2c display)")
+	portFlag := flag.Int("port", 8080, "Port to run the server on")
+	backendUrlFlag := flag.String("backend", "", "Backend URL to send requests to")
 	flag.Parse()
 
 	return &Flags{
-		DevMode: *devModeFlag,
+		DevMode:    *devModeFlag,
+		Port:       *portFlag,
+		BackendUrl: *backendUrlFlag,
 	}
 }
 

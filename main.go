@@ -14,7 +14,7 @@ func main() {
 
 	slog.Info("Starting hmon-terminal", "devMode", flags.DevMode)
 
-	plugManager := plug.NewPlugManager()
+	plugManager := plug.NewPlugManager(flags.BackendUrl)
 
 	plugManager.AddPlug(&plug.Plug{ID: 1, Name: "Plug 1", PowerUsage: 100})
 	plugManager.AddPlug(&plug.Plug{ID: 2, Name: "Plug 2", PowerUsage: 201.2})
@@ -23,10 +23,10 @@ func main() {
 	if flags.DevMode {
 		ui.SetUserInterface(&ui.ConsoleUserInterface{})
 	} else {
-		ui.SetUserInterface(&ui.DisplayUserInterface{})
+		ui.SetUserInterface(&ui.GPIOUserInterface{})
 	}
 
-	server.Start(plugManager, config.SERVER_PORT)
+	server.Start(plugManager, flags.Port)
 
 	ui.StartControlListener(plugManager)
 }
