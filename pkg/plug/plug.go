@@ -1,5 +1,12 @@
 package plug
 
+import (
+	"log"
+	"net/http"
+	"strconv"
+	"time"
+)
+
 type Plug struct {
 	ID         int
 	Name       string
@@ -15,6 +22,22 @@ func (p *Plug) Select() {
 	}
 }
 
-func (p *Plug) Toggle() {
-	p.IsOn = !p.IsOn
+func (p *Plug) Toggle(backendUrl string) {
+	log.Println("Toggling plug", backendUrl+"/plug/"+strconv.Itoa(p.ID)+"/toggle")
+	client := &http.Client{
+		Timeout: 1 * time.Second, // Set timeout duration here
+	}
+
+	url := backendUrl + "/plug/" + strconv.Itoa(p.ID) + "/toggle"
+	req, err := http.NewRequest("POST", url, nil)
+	if err != nil {
+		return
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+
+	_, err = client.Do(req)
+	if err != nil {
+		return
+	}
 }

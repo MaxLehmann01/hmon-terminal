@@ -57,7 +57,7 @@ func (pm *PlugManager) GetSelected() *Plug {
 
 func (pm *PlugManager) ToggleSelected() {
 	if p := pm.GetSelected(); p != nil {
-		p.Toggle()
+		p.Toggle(pm.backendUrl)
 	}
 }
 

@@ -41,6 +41,10 @@ func OutputSelectedPlug(pm *plug.PlugManager) error {
 }
 
 func formatPlugOutput(p *plug.Plug) (line1 string, line2 string) {
+	if p == nil {
+		return "No plug selected", ""
+	}
+
 	width := config.OUTPUT_WIDTH
 
 	state := "[OFF]"
