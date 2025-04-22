@@ -5,6 +5,7 @@ import (
 
 	"github.com/maxlehmann01/hmon-terminal/pkg/config"
 	"github.com/maxlehmann01/hmon-terminal/pkg/plug"
+	"github.com/maxlehmann01/hmon-terminal/pkg/server"
 	"github.com/maxlehmann01/hmon-terminal/pkg/ui"
 )
 
@@ -22,6 +23,8 @@ func main() {
 	if flags.DevMode {
 		ui.SetUserInterface(&ui.ConsoleUserInterface{})
 	}
+
+	server.Start(plugManager, config.SERVER_PORT)
 
 	ui.StartControlListener(plugManager)
 }

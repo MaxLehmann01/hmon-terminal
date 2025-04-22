@@ -5,7 +5,10 @@ import (
 	"time"
 )
 
-const OUTPUT_WIDTH = 16
+const (
+	OUTPUT_WIDTH = 16
+	SERVER_PORT  = 8080
+)
 
 type Flags struct {
 	DevMode bool

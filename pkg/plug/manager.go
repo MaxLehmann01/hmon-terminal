@@ -35,10 +35,20 @@ func (pm *PlugManager) SelectNext() {
 	pm.selectPlug(pm.plugs[pm.selectedPlugIndex])
 }
 
+func (pm *PlugManager) SelectPlugByID(id int) {
+	for _, p := range pm.plugs {
+		if p.ID == id {
+			pm.selectPlug(p)
+			return
+		}
+	}
+}
+
 func (pm *PlugManager) GetSelected() *Plug {
 	if len(pm.plugs) == 0 {
 		return nil
 	}
+
 	return pm.plugs[pm.selectedPlugIndex]
 }
 
@@ -46,4 +56,9 @@ func (pm *PlugManager) ToggleSelected() {
 	if p := pm.GetSelected(); p != nil {
 		p.Toggle()
 	}
+}
+
+func (pm *PlugManager) Clear() {
+	pm.plugs = []*Plug{}
+	pm.selectedPlugIndex = 0
 }
