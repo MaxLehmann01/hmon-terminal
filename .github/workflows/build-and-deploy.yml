@@ -1,0 +1,43 @@
+name: build-and-deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.2'
+      
+      - name: Install dependencies
+        run: go mod download
+
+      - name: Build the project
+        run: go build -o hmon-terminal
+      
+      - name: Upload binary as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hmon-terminal
+          path: hmon-terminal
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: hmon-terminal
+      
+      - name: Deploy to server
+        run: 
+          scp -o StrictHostKeyChecking=no hmon-terminal root@{{ secrets.SSH_IP }}:~/
