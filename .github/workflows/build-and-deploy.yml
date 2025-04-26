@@ -22,7 +22,7 @@ jobs:
         run: go mod download
 
       - name: Build the project
-        run: go build -o hmon-terminal
+        run: GOOS=linux GOARCH=arm GOARM=6 go build -o hmon-terminal
       
       - name: Upload binary as artifact
         uses: actions/upload-artifact@v4
