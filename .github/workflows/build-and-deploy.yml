@@ -40,5 +40,7 @@ jobs:
           name: hmon-terminal
       
       - name: Deploy to server
-        run: 
+        run: |
           scp -o StrictHostKeyChecking=no hmon-terminal root@${{ secrets.SSH_IP }}:~/
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.SSH_IP }} << 'EOF'
+            chmod +x ~/hmon-terminal
