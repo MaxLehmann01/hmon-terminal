@@ -41,6 +41,14 @@ jobs:
       
       - name: Deploy to server
         run: |
-          scp -o StrictHostKeyChecking=no hmon-terminal root@${{ secrets.SSH_IP }}:~/
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.SSH_IP }} << 'EOF'
+            systemctl stop hmon-terminal.service
+            rm -f /root/hmon-terminal
+          EOF
+          scp -o StrictHostKeyChecking=no hmon-terminal root@${{ secrets.SSH_IP }}:/root
           ssh -o StrictHostKeyChecking=no root@${{ secrets.SSH_IP }} << 'EOF'
             chmod +x ~/hmon-terminal
+            systemctl daemon-reload
+            systemctl start hmon-terminal.service
+            systemctl status hmon-terminal.service
+          EOF
