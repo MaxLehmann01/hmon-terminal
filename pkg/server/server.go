@@ -12,10 +12,11 @@ import (
 )
 
 type JSONPlug struct {
-	ID         int     `json:"id"`
-	Name       string  `json:"name"`
-	IsOn       bool    `json:"is_on"`
-	PowerUsage float32 `json:"power_usage"`
+	ID          int     `json:"id"`
+	Name        string  `json:"name"`
+	IsOn        bool    `json:"is_on"`
+	IsProtected bool    `json:"is_protected"`
+	PowerUsage  float32 `json:"power_usage"`
 }
 
 func Start(pm *plug.PlugManager, port int) {
@@ -52,10 +53,11 @@ func Start(pm *plug.PlugManager, port int) {
 
 		for _, jsonPlug := range jsonPlugs {
 			pm.AddPlug(&plug.Plug{
-				ID:         jsonPlug.ID,
-				Name:       jsonPlug.Name,
-				IsOn:       jsonPlug.IsOn,
-				PowerUsage: jsonPlug.PowerUsage,
+				ID:          jsonPlug.ID,
+				Name:        jsonPlug.Name,
+				IsOn:        jsonPlug.IsOn,
+				IsProtected: jsonPlug.IsProtected,
+				PowerUsage:  jsonPlug.PowerUsage,
 			})
 
 			if jsonPlug.ID == selectedID {

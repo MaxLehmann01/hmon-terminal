@@ -45,24 +45,29 @@ func formatPlugOutput(p *plug.Plug) (line1 string, line2 string) {
 		return "No plug selected", ""
 	}
 
-	width := config.OUTPUT_WIDTH
+	maxWidth := config.OUTPUT_WIDTH
 
 	state := "[OFF]"
 	if p.IsOn {
 		state = "[ON]"
 	}
 
-	nameMaxLen := width - len(state)
+	nameMaxLength := maxWidth - len(state)
 	name := p.Name
-
-	if len(name) > nameMaxLen {
-		name = name[:nameMaxLen]
+	if len(name) > nameMaxLength {
+		name = name[:nameMaxLength]
 	}
 
-	line1 = fmt.Sprintf("%-*s%s", nameMaxLen, name, state)
+	power := fmt.Sprintf("%.1fW", p.PowerUsage)
 
-	powerStr := fmt.Sprintf("%.1fW", p.PowerUsage)
-	line2 = fmt.Sprintf("%*s", width, powerStr)
+	protected := "[U]"
+	if p.IsProtected {
+		protected = "[P]"
+	}
 
+	protectedMaxLength := maxWidth - len(power)
+
+	line1 = fmt.Sprintf("%-*s%s", nameMaxLength, name, state)
+	line2 = fmt.Sprintf("%-*s%s", protectedMaxLength, protected, power)
 	return line1, line2
 }
